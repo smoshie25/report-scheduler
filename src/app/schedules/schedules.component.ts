@@ -27,7 +27,7 @@ export class SchedulesComponent implements OnInit {
 
   fileInfos: Observable<any>;
 
-  schedule = {active: true};
+  schedule : Schedule;
 
   form: FormGroup;
   payLoad = '';
