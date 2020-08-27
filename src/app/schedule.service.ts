@@ -10,7 +10,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class ScheduleService {
 
-  private BaseURL = 'http://localhost:8080';  // URL to web api
+  private BaseURL = 'https://test-report-scheduler.herokuapp.com';  // URL to web api
   content : any[];
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
