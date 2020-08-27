@@ -1,0 +1,117 @@
+
+<div class="container">
+  <div class="col-md-6">
+  <form #scheduleForm="ngForm" appIdentityRevealed>
+    <div [hidden]="scheduleForm.submitted">
+      <div class="cross-validation" [class.cross-validation-error]="scheduleForm.errors?.identityRevealed && (scheduleForm.touched || scheduleForm.dirty)">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input id="name" name="name" class="form-control"
+                required [(ngModel)]="schedule.name" #name="ngModel" >
+
+          <div *ngIf="name.invalid && (name.dirty || name.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="name.errors.required">
+              Name is required.
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input id="description" name="description" class="form-control"
+                [(ngModel)]="schedule.description" #description="ngModel" >
+
+        </div>
+
+        <div class="form-group">
+          <label for="recipients">Recepients (seperated by ',')</label>
+          <input id="recipients" name="recipients" class="form-control"
+                required [(ngModel)]="schedule.recipients" #recipients="ngModel" >
+
+          <div *ngIf="recipients.invalid && (recipients.dirty || recipients.touched)"
+              class="alert alert-danger">
+
+            <div *ngIf="recipients.errors.required">
+              Recipients is required.
+            </div>
+
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input id="date" name="date" class="form-control"
+                [(ngModel)]="schedule.date" #date="ngModel" >
+        </div>
+
+        <div class="form-group">
+          <label for="time">Time</label>
+          <input id="time" name="time" class="form-control"
+                [(ngModel)]="schedule.time" #time="ngModel" >
+        </div>
+       
+      </div>
+
+      <div class="form-group">
+        <label for="scheduleType">Schedule Type</label>
+        <select id="scheduleType" name="scheduleType" class="form-control"
+        [(ngModel)]="schedule.scheduleType" #scheduleType="ngModel">
+          <option *ngFor="let t of types" [value]="t">{{t}}</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="frequency">Days</label>
+        <select id="frequency" name="frequency" class="multiselect-ui form-control"
+                 [(ngModel)]="schedule.frequency" #frequency="ngModel" multiple="multiple">
+          <option *ngFor="let d of days" [value]="d">{{d}}</option>
+        </select>
+      </div>
+
+      <div *ngIf="currentFile" class="progress">
+        <div
+          class="progress-bar progress-bar-info progress-bar-striped"
+          role="progressbar"
+          attr.aria-valuenow="{{ progress }}"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          [ngStyle]="{ width: progress + '%' }"
+        >
+          {{ progress }}%
+        </div>
+      </div>
+      
+      <label class="btn btn-default">
+        <input type="file" (change)="upload($event)" />
+      </label>
+    
+
+    <div>
+      <button (click)="add(schedule); schedule=''" type="submit" class="btn btn-default"
+      [disabled]="scheduleForm.invalid">Create</button>
+    </div>
+
+      
+    </div>
+
+    <div class="submitted-message" *ngIf="scheduleForm.submitted">
+      <p>You've submitted your schedule, {{ scheduleForm.value.name }}!</p>
+      <button (click)="scheduleForm.resetForm({})">Add new schedule</button>
+    </div>
+  </form>
+</div>
+<div class="col-md-6">
+  <ul class="schedules">
+    <li *ngFor="let schedule of schedules">
+      <a routerLink="/detail/{{schedule.id}}">
+        <span class="badge">{{schedule.scheduleType}}</span> {{schedule.name}}
+      </a>
+    </li>
+  </ul>
+</div>
+</div>
+
+
